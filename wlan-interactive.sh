@@ -8,7 +8,7 @@ echo "==============================="
 echo ""
 
 # Get current Wi-Fi network (only SSID, not MAC address)
-current_ssid=$(powershell -ExecutionPolicy Bypass -File get-current-ssid.ps1)
+current_ssid=$(powershell -Command "netsh wlan show interfaces | Select-String 'SSID' | Where-Object { `$_ -notmatch 'BSSID' } | ForEach-Object { (`$_ -split ':')[1].Trim() }")
 
 # Get Wi-Fi network name from user
 echo -n "Enter Wi-Fi network name (or press Enter for current: $current_ssid): "
